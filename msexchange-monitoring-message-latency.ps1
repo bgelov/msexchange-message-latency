@@ -1,37 +1,36 @@
-﻿#Monitoring Message Latency on Exchange servers
-#
+﻿# Monitoring Message Latency on Exchange servers
 
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://EXCHANGE-SERVER/PowerShell/ -Authentication Kerberos
 Import-PSSession $Session
 
-#Local domain
+# Local domain
 $localDomain = "@bgelov.ru"
 
-#Exchange servers
+# Exchange servers
 $server = "Exch1","Exch2","Excha3","Exch4"
 
-#Notify from
+# Notify from
 $smtpFrom = "MessageLatency@bgelov.ru"
 
-#Notify to
+# Notify to
 $smtpTo = "MessageLatency@bgelov.ru"
 
-#Message subject
-$messageSubject = "Big MessageLatency on "
-
-#SMTP server
+# SMTP server
 $smtpserver = "smtp.bgelov.ru"
 
-#Check period in min
+# Message subject
+$messageSubject = "Big MessageLatency on "
+
+# Check period in min
 $minutes = 30
 
 
-#Lattency-----
-#Seconds
+# Lattency. max values for monitoring-----
+# Get messages wit latency seconds -gt $messageLatency
 $messageLatency = '00:00:12'
-#MB
+# and MB -lt $messageLatencyMB 
 $messageLatencyMB = 5
-#RecipientCounts
+# and RecipientCounts -lt $messageRecipientsCount
 $messageRecipientsCount = 45
 
 
@@ -60,8 +59,8 @@ th {
 </style>
 </head>
 <body>
-<p>Наблюдаются задержки в доставке почты за последние ' + $minutes + ' минут.<br>
-Возможно, есть какие-либо проблемы:</p>'
+<p>There has been a delay in mail delivery for the last ' + $minutes + ' minutes.
+There may be some problems:</p>'
 
     $table = "<table><tr style='background-color:#fafafa'><th>EventID</th><th>Timestamp</th><th>MB</th><th>Sender</th><th>MessageLatency</th><th>Recipients</th><th>MessageSubject</th></tr>"
 
@@ -75,7 +74,7 @@ th {
 
     $table += "</table>"
 
-    $body += $table + "<p>Письмо сгенерировано автоматически.</p>
+    $body += $table + "<p>The letter was automatically generated.</p>
     </body></html>"
 
     
